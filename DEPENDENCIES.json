@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "observed_on": "2026-11-12",
+  "scope": "Direct runtime, optional and build attribution; native/transitive notices remain separate",
+  "packages": [
+    {
+      "name": "ImageHash",
+      "declarations": [
+        {
+          "group": "runtime",
+          "requirement": "ImageHash==4.3.2"
+        }
+      ],
+      "observed_release": "4.3.2",
+      "declared_license": "2-clause BSD License",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/ImageHash/4.3.2/json",
+      "source_links": {
+        "Homepage": "https://github.com/JohannesBuchner/imagehash"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "numpy",
+      "declarations": [
+        {
+          "group": "runtime",
+          "requirement": "numpy>=2.3,<3"
+        }
+      ],
+      "observed_release": "2.5.4",
+      "declared_license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/numpy/json",
+      "source_links": {
+        "documentation": "https://numpy.org/doc/",
+        "download": "https://pypi.org/project/numpy/#files",
+        "homepage": "https://numpy.org",
+        "release notes": "https://numpy.org/doc/stable/release",
+        "source": "https://github.com/numpy/numpy",
+        "tracker": "https://github.com/numpy/numpy/issues"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "opencv-python-headless",
+      "declarations": [
+        {
+          "group": "vision",
+          "requirement": "opencv-python-headless==4.14.0.94"
+        }
+      ],
+      "observed_release": "4.14.0.94",
+      "declared_license": "Apache 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "metadata_url": "https://pypi.org/pypi/opencv-python-headless/4.14.0.94/json",
+      "source_links": {
+        "Homepage": "https://github.com/opencv/opencv-python"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "Pillow",
+      "declarations": [
+        {
+          "group": "runtime",
+          "requirement": "Pillow==13.0.0"
+        }
+      ],
+      "observed_release": "13.0.0",
+      "declared_license": "MIT-CMU",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/Pillow/13.0.0/json",
+      "source_links": {
+        "Changelog": "https://github.com/python-pillow/Pillow/releases",
+        "Documentation": "https://pillow.readthedocs.io",
+        "Funding": "https://tidelift.com/lifter/search/pypi/pillow",
+        "Homepage": "https://python-pillow.org",
+        "Mastodon": "https://fosstodon.org/@pillow",
+        "Release notes": "https://pillow.readthedocs.io/en/stable/releasenotes/index.html",
+        "Security": "https://pillow.readthedocs.io/en/stable/handbook/security.html",
+        "Source": "https://github.com/python-pillow/Pillow"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "pillow-heif",
+      "declarations": [
+        {
+          "group": "heif",
+          "requirement": "pillow-heif==1.8.1"
+        }
+      ],
+      "observed_release": "1.8.1",
+      "declared_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/pillow-heif/1.8.1/json",
+      "source_links": {
+        "Changelog": "https://github.com/bigcat88/pillow_heif/blob/master/CHANGELOG.md",
+        "Documentation": "https://pillow-heif.readthedocs.io",
+        "Homepage": "https://github.com/bigcat88/pillow_heif",
+        "Source": "https://github.com/bigcat88/pillow_heif"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "PyMuPDF",
+      "declarations": [
+        {
+          "group": "pdf",
+          "requirement": "PyMuPDF==1.27.2.3"
+        }
+      ],
+      "observed_release": "1.27.2.3",
+      "declared_license": "Dual Licensed - GNU AFFERO GPL 3.0 or Artifex Commercial License",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/PyMuPDF/1.27.2.3/json",
+      "source_links": {
+        "Changelog": "https://pymupdf.readthedocs.io/en/latest/changes.html",
+        "Documentation": "https://pymupdf.readthedocs.io/",
+        "Source": "https://github.com/pymupdf/pymupdf",
+        "Tracker": "https://github.com/pymupdf/PyMuPDF/issues"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "rawpy",
+      "declarations": [
+        {
+          "group": "raw",
+          "requirement": "rawpy==0.28.0"
+        }
+      ],
+      "observed_release": "0.28.0",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/rawpy/0.28.0/json",
+      "source_links": {
+        "Changelog": "https://github.com/letmaik/rawpy/releases",
+        "Documentation": "https://letmaik.github.io/rawpy/",
+        "Homepage": "https://github.com/letmaik/rawpy",
+        "Issues": "https://github.com/letmaik/rawpy/issues",
+        "Repository": "https://github.com/letmaik/rawpy.git"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "setuptools",
+      "declarations": [
+        {
+          "group": "build",
+          "requirement": "setuptools==84.2.1"
+        }
+      ],
+      "observed_release": "84.2.1",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/setuptools/84.2.1/json",
+      "source_links": {
+        "Changelog": "https://setuptools.pypa.io/en/stable/history.html",
+        "Documentation": "https://setuptools.pypa.io/",
+        "Source": "https://github.com/pypa/setuptools"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    },
+    {
+      "name": "wheel",
+      "declarations": [
+        {
+          "group": "build",
+          "requirement": "wheel==0.48.0"
+        }
+      ],
+      "observed_release": "0.48.0",
+      "declared_license": "MIT",
+      "license_classifiers": [],
+      "metadata_url": "https://pypi.org/pypi/wheel/0.48.0/json",
+      "source_links": {
+        "Changelog": "https://wheel.readthedocs.io/en/stable/news.html",
+        "Documentation": "https://wheel.readthedocs.io/",
+        "Issue Tracker": "https://github.com/pypa/wheel/issues",
+        "Source": "https://github.com/pypa/wheel"
+      },
+      "note": "Public package metadata, not a resolver lock or exhaustive native wheel license inventory"
+    }
+  ]
+}

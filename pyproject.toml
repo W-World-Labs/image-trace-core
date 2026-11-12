@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools==84.2.1", "wheel==0.48.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image-trace-core"
+version = "0.1.0"
+description = "Local image fingerprints, descriptor helpers, document image extraction and NumPy similarity matrices"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "W contributors" }]
+dependencies = ["Pillow==13.0.0", "ImageHash==4.3.2", "numpy>=2.3,<3"]
+
+[project.optional-dependencies]
+vision = ["opencv-python-headless==4.14.0.94"]
+pdf = ["PyMuPDF==1.27.2.3"]
+heif = ["pillow-heif==1.8.1"]
+raw = ["rawpy==0.28.0"]
+
+[project.urls]
+Source = "https://github.com/W-World-Labs/image-trace-core"
+
+[tool.setuptools]
+packages = ["image_trace_core"]
+package-dir = { image_trace_core = "." }
+include-package-data = false
+
+[tool.setuptools.data-files]
+"share/image-trace-core" = ["README.md", "UPSTREAM.json", "DEPENDENCIES.json"]

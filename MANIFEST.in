@@ -1,0 +1,4 @@
+include LICENSE README.md pyproject.toml UPSTREAM.json DEPENDENCIES.json MANIFEST.in .gitignore
+include __init__.py image_processor.py document_parser.py feature_matrix.py
+recursive-include scripts *.py
+include .github/workflows/ci.yml

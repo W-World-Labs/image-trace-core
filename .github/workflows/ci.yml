@@ -1,0 +1,100 @@
+name: Image Trace Core
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - run: python3 scripts/check-source.py
+      - name: Scan current source and complete public history
+        run: |
+          curl --fail --location --retry 2 --connect-timeout 15 --max-time 90 --output "$RUNNER_TEMP/gitleaks.tar.gz" https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $RUNNER_TEMP/gitleaks.tar.gz" | sha256sum --check --strict
+          tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP" gitleaks
+          "$RUNNER_TEMP/gitleaks" dir . --redact --no-banner
+          "$RUNNER_TEMP/gitleaks" git . --log-opts=--all --redact --no-banner
+
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        python: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install explicitly selected original dependencies
+        run: |
+          python -m pip --isolated install --index-url https://pypi.org/simple 'pip==26.3' 'setuptools==84.2.1' 'wheel==0.48.0' 'build==1.6.1' 'pip-audit==2.10.1'
+          python -m pip --isolated install --index-url https://pypi.org/simple '.[vision,pdf,heif,raw]'
+          python -m pip check
+      - name: Compile own source and strictly audit third-party dependencies
+        run: |
+          python -m compileall -q __init__.py image_processor.py document_parser.py feature_matrix.py scripts
+          python - <<'PY'
+          import importlib.metadata as metadata
+          from pathlib import Path
+          requirements = sorted(dist.metadata['Name'] + '==' + dist.version for dist in metadata.distributions() if dist.metadata['Name'].lower().replace('_', '-') != 'image-trace-core')
+          Path('AUDIT-DEPENDENCIES.txt').write_text('\n'.join(requirements) + '\n')
+          PY
+          python -m pip_audit --strict --no-deps --disable-pip --requirement AUDIT-DEPENDENCIES.txt
+      - name: Build own package and verify archive closure
+        run: |
+          python -m build --no-isolation
+          python scripts/check-artifacts.py dist
+          python -m pip list --format=freeze > dist/BUILD-DEPENDENCIES.txt
+          mv AUDIT-DEPENDENCIES.txt dist/
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('dist')
+          (root/'SOURCE.json').write_text(json.dumps({'schema':1,'source_commit':os.environ['GITHUB_SHA'],'package':'image-trace-core','version':'0.1.0','own_license':'MIT','third_party_source_modified':False,'third_party_source_vendored':False,'models_included':False,'data_included':False},sort_keys=True)+'\n')
+          (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in sorted(root.iterdir()) if p.is_file()))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: matrix.python == '3.11'
+        with:
+          name: image-trace-core
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [source, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: image-trace-core
+          path: dist
+      - name: Publish core-only artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd dist
+          sha256sum --check --strict SHA256SUMS
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then exit 1; fi
+          gh release create "$GITHUB_REF_NAME" ./* --repo "$GITHUB_REPOSITORY" --verify-tag --target "$GITHUB_SHA" --latest --title "$GITHUB_REF_NAME" --notes 'MIT W-owned local image/document processing core. Original third-party backends are installed separately and retain their software/native/data/commercial terms; optional PyMuPDF remains AGPL/commercial. No service, UI, accounts, model, media, dataset or native binary is included. See README and dependency attribution before use or redistribution.'

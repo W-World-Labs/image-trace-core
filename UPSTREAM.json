@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "package": "image-trace-core",
+  "version": "0.1.0",
+  "license": "MIT for W-owned code only",
+  "origin": "Reusable processing functions extracted from W's Image Trace implementation; original MIT copyright retained",
+  "changed_on": "2026-11-12",
+  "scope": ["format-aware RGB decoding and perceptual fingerprints", "stateless local descriptors and matching scores", "PDF/DOCX/PPTX local image extraction", "pure NumPy matrices for caller-supplied vectors"],
+  "third_party_source_vendored": false,
+  "third_party_source_modified": false,
+  "external_models_included": false,
+  "external_data_included": false,
+  "dependency_attribution": "DEPENDENCIES.json",
+  "license_and_data_details": "README.md"
+}
