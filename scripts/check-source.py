@@ -9,7 +9,7 @@ import unicodedata
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
-    '.github/workflows/ci.yml', '.gitignore', 'DEPENDENCIES.json', 'LICENSE',
+    '.github/workflows/ci.yml', '.gitignore', 'AGENTS.md', 'DEPENDENCIES.json', 'LICENSE',
     'MANIFEST.in', 'README.md', 'UPSTREAM.json', '__init__.py',
     'document_parser.py', 'feature_matrix.py', 'image_processor.py',
     'pyproject.toml', 'scripts/check-source.py', 'scripts/check-artifacts.py',
@@ -40,7 +40,7 @@ def main():
         entries[name] = mode
     require(set(entries) == FILES, 'Source inventory differs from the reviewed core-only boundary')
     project = tomllib.loads((ROOT / 'pyproject.toml').read_text())
-    require(project['project']['name'] == 'image-trace-core' and project['project']['version'] == '0.1.0', 'Unexpected package identity')
+    require(project['project']['name'] == 'image-trace-core' and project['project']['version'] == '0.1.1', 'Unexpected package identity')
     require(project['project']['license'] == 'MIT', 'Own core license must be explicit')
     require(project['tool']['setuptools']['packages'] == ['image_trace_core'], 'Unexpected packaged implementation')
     require(project['tool']['setuptools']['package-dir'] == {'image_trace_core': '.'}, 'Unexpected package directory')

@@ -66,7 +66,7 @@ jobs:
           import hashlib, json, os
           from pathlib import Path
           root = Path('dist')
-          (root/'SOURCE.json').write_text(json.dumps({'schema':1,'source_commit':os.environ['GITHUB_SHA'],'package':'image-trace-core','version':'0.1.0','own_license':'MIT','third_party_source_modified':False,'third_party_source_vendored':False,'models_included':False,'data_included':False},sort_keys=True)+'\n')
+          (root/'SOURCE.json').write_text(json.dumps({'schema':1,'source_commit':os.environ['GITHUB_SHA'],'package':'image-trace-core','version':'0.1.1','own_license':'MIT','third_party_source_modified':False,'third_party_source_vendored':False,'models_included':False,'data_included':False},sort_keys=True)+'\n')
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in sorted(root.iterdir()) if p.is_file()))
           PY
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

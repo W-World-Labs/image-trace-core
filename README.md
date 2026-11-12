@@ -1,9 +1,11 @@
 # Image Trace Core
 
-Version 0.1.0 is the reusable **local Python core** of Image Trace. It contains
+Version 0.1.1 is the reusable **local Python core** of Image Trace. It contains
 W-owned image decoding/fingerprint/grouping helpers, stateless OpenCV descriptor
 helpers, PDF/DOCX/PPTX image extraction and pure NumPy similarity matrices.
 It is a library, not the Image Trace web service or desktop application.
+The maintainer guide is [AGENTS.md](AGENTS.md); this patch release adds that guide
+and updates release metadata while preserving the 0.1.0 algorithm implementations.
 Application database caches, tenant authorization, accounts, telemetry, deployment
 configuration, UI and stored files are outside this distribution.
 
