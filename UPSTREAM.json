@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "package": "image-trace-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT for W-owned code only",
   "origin": "Reusable processing functions extracted from W's Image Trace implementation; original MIT copyright retained",
   "changed_on": "2026-11-12",

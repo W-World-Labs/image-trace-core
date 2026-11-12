@@ -9,7 +9,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = {'__init__.py', 'document_parser.py', 'feature_matrix.py', 'image_processor.py'}
-DATA = {'README.md', 'UPSTREAM.json', 'DEPENDENCIES.json'}
+DATA = {'README.md', 'AGENTS.md', 'UPSTREAM.json', 'DEPENDENCIES.json'}
 
 
 def require(condition, message):
@@ -38,14 +38,14 @@ def main():
             require(archive.read('image_trace_core/' + name) == (ROOT / name).read_bytes(), 'Wheel/source bytes differ: ' + name)
         for name in names:
             safe_name(name)
-            require(name in expected_modules or name.startswith('image_trace_core-0.1.0.dist-info/') or name.startswith('image_trace_core-0.1.0.data/data/share/image-trace-core/'), 'Unexpected wheel path: ' + name)
+            require(name in expected_modules or name.startswith('image_trace_core-0.1.1.dist-info/') or name.startswith('image_trace_core-0.1.1.data/data/share/image-trace-core/'), 'Unexpected wheel path: ' + name)
             require(not name.endswith(('.whl', '.pt', '.onnx', '.so', '.dll', '.jpg', '.png', '.pdf', '.docx', '.pptx', '.csv', '.db', '.pem', '.key')), 'External/data/binary payload in own wheel')
         for name in DATA:
-            path = 'image_trace_core-0.1.0.data/data/share/image-trace-core/' + name
+            path = 'image_trace_core-0.1.1.data/data/share/image-trace-core/' + name
             require(archive.read(path) == (ROOT / name).read_bytes(), 'Provenance bytes differ')
-        require(archive.read('image_trace_core-0.1.0.dist-info/licenses/LICENSE') == (ROOT / 'LICENSE').read_bytes(), 'Original license differs')
-        metadata = email.message_from_bytes(archive.read('image_trace_core-0.1.0.dist-info/METADATA'))
-        require(metadata['Name'] == 'image-trace-core' and metadata['Version'] == '0.1.0', 'Unexpected wheel identity')
+        require(archive.read('image_trace_core-0.1.1.dist-info/licenses/LICENSE') == (ROOT / 'LICENSE').read_bytes(), 'Original license differs')
+        metadata = email.message_from_bytes(archive.read('image_trace_core-0.1.1.dist-info/METADATA'))
+        require(metadata['Name'] == 'image-trace-core' and metadata['Version'] == '0.1.1', 'Unexpected wheel identity')
     own_files = set(filter(None, subprocess.check_output(['git', 'ls-files', '-z', '--', '.'], cwd=ROOT).decode().split('\0')))
     generated = {'PKG-INFO', 'setup.cfg', 'image_trace_core.egg-info/PKG-INFO', 'image_trace_core.egg-info/SOURCES.txt', 'image_trace_core.egg-info/dependency_links.txt', 'image_trace_core.egg-info/requires.txt', 'image_trace_core.egg-info/top_level.txt'}
     with tarfile.open(sources[0]) as archive:
@@ -53,9 +53,9 @@ def main():
         for member in archive.getmembers():
             safe_name(member.name)
             require(not member.issym() and not member.islnk(), 'Archive links are forbidden')
-            if member.isdir() and member.name == 'image_trace_core-0.1.0':
+            if member.isdir() and member.name == 'image_trace_core-0.1.1':
                 continue
-            require(member.name.startswith('image_trace_core-0.1.0/'), 'Unexpected sdist prefix')
+            require(member.name.startswith('image_trace_core-0.1.1/'), 'Unexpected sdist prefix')
             if member.isfile():
                 relative = str(PurePosixPath(member.name.split('/', 1)[1]))
                 require(relative not in files, 'Duplicate sdist file')
