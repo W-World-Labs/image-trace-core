@@ -2,10 +2,7 @@ name: Image Trace Core
 
 on:
   push:
-    branches: [main]
-    tags: ['v*']
-  pull_request:
-  workflow_dispatch:
+    tags: [v*]
 
 permissions:
   contents: read
