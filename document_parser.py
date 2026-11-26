@@ -65,7 +65,8 @@ class DocumentParser:
         """
         file_path = Path(file_path)
         ext = file_path.suffix.lower()
-        output_prefix = output_prefix or uuid.uuid4().hex
+        if output_prefix is None:
+            output_prefix = uuid.uuid4().hex
         if not isinstance(output_prefix, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", output_prefix):
             raise ValueError("output_prefix must contain 1-64 ASCII letters, digits, underscores or hyphens")
         if file_path.stat().st_size > 200 * 1024 * 1024:
